@@ -132,10 +132,8 @@ export default function RxScanner() {
     console.log("🛠️ Pre-processing image for Gemini 3...");
     const optimizedBase64 = await resizeImage(imgBase64);
 
-    // V2.1 Clean Build Timestamp: 2026-04-14-19:18
     const models = [
       "gemini-1.5-flash",
-      "gemini-2.0-flash",
       "gemini-1.5-pro"
     ];
 
