@@ -130,7 +130,7 @@ export default function RxScanner() {
       const { GoogleGenerativeAI } = await import("@google/generative-ai");
       const genAI = new GoogleGenerativeAI(cleanKey);
       
-      const models = ["gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-2.0-flash"];
+      const models = ["gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-pro-vision"];
       
       for (const modelId of models) {
         try {
@@ -300,7 +300,7 @@ export default function RxScanner() {
           <Logo size="sm" />
           <div className="h-6 w-[1px] bg-white/10 mx-2" />
           <h1 className="font-black text-white text-sm leading-none uppercase tracking-widest flex items-center gap-2">
-            Rx Scanner <span className="text-[10px] bg-red-600 text-white px-1 rounded font-mono">v3.1 RED</span>
+            Rx Scanner <span className="text-[10px] bg-red-600 text-white px-1 rounded font-mono">v3.2</span>
           </h1>
           <div className="ml-auto flex items-center gap-3">
             <button onClick={() => setShowSettings(true)} className="p-2.5 text-zinc-500 hover:text-white hover:bg-white/5 rounded-xl transition-all"><Settings size={20} /></button>
