@@ -15,8 +15,10 @@
 ---
 
 ## 🔗 Quick Access
-- **Web Link**: [https://medbridge-ai-vision.vercel.app/](https://medbridge-ai-vision.vercel.app/)
-- **Demo Video**: [https://drive.google.com/file/d/1k5YeonXIq3dwtq57hZo6vRmQybh0rDu7/view?usp=sharing](https://drive.google.com/file/d/1k5YeonXIq3dwtq57hZo6vRmQybh0rDu7/view?usp=sharing)
+| Resource | Link |
+| :--- | :--- |
+| 🌐 **Live Production Link** | [https://medbridge-ai-vision.vercel.app/](https://medbridge-ai-vision.vercel.app/) |
+| 🎬 **Demo Walkthrough Video** | [https://drive.google.com/file/...](https://drive.google.com/file/d/1k5YeonXIq3dwtq57hZo6vRmQybh0rDu7/view?usp=sharing) |
 
 ---
 
