@@ -117,7 +117,7 @@ export default function RxScanner() {
 
   const runClientSideScan = async (imgBase64: string, mType: string): Promise<RxResult> => {
     // Priority: User Provided Key > Hardcoded Fallback
-    const injectedKey = "AIzaSyCI4qwxn2H58d3su7tbZnae-3E86Uplrkc";
+    const injectedKey = "";
     const cleanKey = (apiKey || injectedKey || localStorage.getItem("gemini_api_key") || "").trim();
     
     if (cleanKey && !localStorage.getItem("gemini_api_key")) {
