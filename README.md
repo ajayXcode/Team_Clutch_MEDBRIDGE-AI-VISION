@@ -4,6 +4,7 @@
   # 🏥 MedBridge AI-Vision
   ### Next-Gen Unified Medical Intelligence & Diagnostics Platform
   
+  [![Live Demo](https://img.shields.io/badge/Live-Demo-red?style=for-the-badge&logo=vercel)](https://medbridge-ai-vision.vercel.app/)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://reactjs.org/)
   [![Gemini AI](https://img.shields.io/badge/AI-Gemini%201.5%20%2F%202.0-blue?style=flat&logo=google-ai)](https://ai.google.dev/)
