@@ -124,16 +124,17 @@ export default function RxScanner() {
 
     console.log("🛠️ Preparing clinical SDK pipeline...");
     const optimizedBase64 = await resizeImage(imgBase64);
+    console.log(`[DEBUG] Using API Key ending in: ****${cleanKey.slice(-4)}`);
 
     try {
       const { GoogleGenerativeAI } = await import("@google/generative-ai");
       const genAI = new GoogleGenerativeAI(cleanKey);
       
-      const models = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"];
+      const models = ["gemini-1.5-flash-latest", "gemini-1.5-flash", "gemini-2.0-flash"];
       
       for (const modelId of models) {
         try {
-          console.log(`📡 MedBridge SDK: Engaging ${modelId}...`);
+          console.log(`📡 MedBridge SDK: Attempting ${modelId}...`);
           setCurrentModel(modelId);
           const model = genAI.getGenerativeModel({ model: modelId });
 
@@ -159,15 +160,13 @@ export default function RxScanner() {
           toast.success("AI Diagnostic Complete.");
           return { ...validated, source: `AI Verified (${modelId})` };
         } catch (err: any) {
-          console.warn(`⚠️ SDK ${modelId} failed:`, err.message);
-          if (err.message?.includes("429")) {
-            toast.error("Quota exhausted for this key. Try another key.");
-            throw err;
-          }
+          console.warn(`⚠️ ${modelId} unavailable: ${err.message}`);
+          // Continue to next model even on 429
+          continue;
         }
       }
     } catch (err) {
-      console.error("SDK Error:", err);
+      console.error("SDK Fatal Error:", err);
     }
 
     console.warn("🚨 ALL CLOUD MODELS SATURATED. Activating Clinical Simulation...");
@@ -301,7 +300,7 @@ export default function RxScanner() {
           <Logo size="sm" />
           <div className="h-6 w-[1px] bg-white/10 mx-2" />
           <h1 className="font-black text-white text-sm leading-none uppercase tracking-widest flex items-center gap-2">
-            Rx Scanner <span className="text-[10px] bg-red-600 text-white px-1 rounded font-mono">v3.0 RED</span>
+            Rx Scanner <span className="text-[10px] bg-red-600 text-white px-1 rounded font-mono">v3.1 RED</span>
           </h1>
           <div className="ml-auto flex items-center gap-3">
             <button onClick={() => setShowSettings(true)} className="p-2.5 text-zinc-500 hover:text-white hover:bg-white/5 rounded-xl transition-all"><Settings size={20} /></button>
