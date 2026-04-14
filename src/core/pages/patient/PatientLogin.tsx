@@ -76,6 +76,18 @@ export default function PatientLogin() {
               className="w-full py-5 bg-white text-black rounded-[1.5rem] font-black text-lg uppercase tracking-widest hover:bg-zinc-200 transition-all disabled:opacity-50 flex items-center justify-center gap-3 shadow-xl shadow-white/5 group active:scale-95">
               {loading ? <><Loader2 className="w-6 h-6 animate-spin" /> Authorizing...</> : <>Initialize Session <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></>}
             </button>
+
+            {/* ✅ QUICK LOGIN FOR HACKATHON DEMO */}
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <button type="button" onClick={() => { setEmail("patient@medbridge.app"); setPassword("Patient@123"); }}
+                className="py-3 px-2 bg-primary/10 border border-primary/20 rounded-xl text-[10px] font-black text-primary uppercase tracking-tighter hover:bg-primary/20 transition-all">
+                Auto-Fill Patient
+              </button>
+              <button type="button" onClick={() => { setEmail("doctor@medbridge.app"); setPassword("Doctor@123"); }}
+                className="py-3 px-2 bg-red-600/10 border border-red-600/20 rounded-xl text-[10px] font-black text-red-600 uppercase tracking-tighter hover:bg-red-600/20 transition-all">
+                Auto-Fill Doctor
+              </button>
+            </div>
           </form>
 
           <div className="mt-10 pt-8 border-t border-white/[0.05] space-y-4">

@@ -196,10 +196,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // ─── LOGIN via Supabase Direct Auth ────────────────────────────────────────
   const login = async (email: string, password: string) => {
     const normalizedEmail = email.trim().toLowerCase();
+    const normalizedPass = password.trim();
 
     // ✅ Demo account bypass (instant login for hackathon demo)
     if (DEMO_ACCOUNTS[normalizedEmail]) {
-      if (DEMO_PASSWORDS[normalizedEmail] !== password) {
+      if (DEMO_PASSWORDS[normalizedEmail] !== normalizedPass && DEMO_PASSWORDS[normalizedEmail] !== password) {
         throw new Error("Invalid password for demo account.");
       }
       const authUser = DEMO_ACCOUNTS[normalizedEmail];
