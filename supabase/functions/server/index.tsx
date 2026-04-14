@@ -5,15 +5,27 @@ import * as kv from "./kv_store.tsx";
 
 const app = new Hono();
 app.use('*', logger(console.log));
-app.use("/*", cors({
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, PATCH, DELETE",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-session-token",
+  "Access-Control-Max-Age": "600",
+};
+app.use("*", cors({
   origin: "*",
-  allowHeaders: ["Content-Type", "Authorization", "X-Session-Token"],
-  allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowHeaders: ["authorization", "x-client-info", "apikey", "content-type", "x-session-token"],
+  allowMethods: ["POST", "GET", "OPTIONS", "PUT", "PATCH", "DELETE"],
   exposeHeaders: ["Content-Length"],
   maxAge: 600,
 }));
 
-const GEMINI_KEY = Deno.env.get("GEMINI_API_KEY") || "";
+// Explicitly handle OPTIONS for complex preflights
+app.options("*", (c) => {
+  return c.text("", 204, corsHeaders);
+});
+
+const USER_KEY = "AIzaSyCI4qwxn2H58d3su7tbZnae-3E86Uplrkc";
+const GEMINI_KEY = Deno.env.get("GEMINI_API_KEY") || USER_KEY;
 const PREFIX = "/make-server-65d73ded";
 
 // ─── Utility ──────────────────────────────────────────────────────────────────
@@ -519,24 +531,53 @@ Important rules:
 - If you cannot clearly read a medicine, still include it with your best interpretation
 - Effectiveness should reflect published research quality, not claims`;
 
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: prompt },
-              { inlineData: { mimeType: mimeType || "image/jpeg", data: imageBase64 } }
-            ]
-          }],
-          generationConfig: { temperature: 0.3, maxOutputTokens: 4096 }
-        })
-      }
-    );
+    // Multi-model fallback sequence for server-side stability
+    const models = ["gemini-2.0-flash", "gemini-1.5-pro", "gemini-1.5-flash"];
+    let lastError: any = null;
+    let gemData: any = null;
 
-    const gemData = await res.json();
+    for (const modelId of models) {
+      try {
+        console.log(`📡 Server AI: Attempting with ${modelId}...`);
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${GEMINI_KEY}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{
+                parts: [
+                  { text: prompt },
+                  { inlineData: { mimeType: mimeType || "image/jpeg", data: imageBase64 } }
+                ]
+              }],
+              generationConfig: { temperature: 0.3, maxOutputTokens: 4096 }
+            })
+          }
+        );
+
+        if (res.status === 429) {
+          console.warn(`⚠️ Server Quota hit for ${modelId}. Trying next...`);
+          continue;
+        }
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err?.error?.message || `API error ${res.status}`);
+        }
+
+        gemData = await res.json();
+        if (gemData?.candidates?.[0]?.content?.parts?.[0]?.text) break;
+      } catch (err: any) {
+        lastError = err;
+        console.error(`❌ Server Model ${modelId} failed:`, err.message);
+      }
+    }
+
+    if (!gemData) {
+       throw lastError || new Error("All clinical models are currently saturated.");
+    }
+
     let raw = gemData?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
     raw = raw.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
 

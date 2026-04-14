@@ -300,4 +300,51 @@ export const mockApi = {
     checkedIn: false, aiSummary: null,
     createdAt: new Date().toISOString().split("T")[0],
   }),
+  getMockRxResult: () => ({
+    patientName: "Rahul Sharma",
+    doctorName: "Dr. Anirudh Raje",
+    date: "14-04-2026",
+    clinic: "Shanti Niwas, Bandra",
+    confidenceScore: 94,
+    medicines: [
+      {
+        brandName: "Cap. Subitral",
+        genericName: "Itraconazole 130mg",
+        prescribedDose: "1 cap morning (after food) for 10 days",
+        treatsCondition: "Fungal infection",
+        sideEffects: ["Nausea", "Liver enzyme shift", "Stomach ache"],
+        category: "Antifungal",
+        ayurvedaAlternatives: [{
+          name: "Neem Ghanvati", hindiName: "नीम घनवटी", form: "Tablet",
+          treats: "Skin infections, blood purification", howToTake: "2 tabs empty stomach with warm water",
+          activeCompounds: "Azadirachtin, Nimbin", effectiveness: 88,
+          safetyNote: "Effective adjunct for fungal issues. Avoid if planning pregnancy."
+        }],
+        genericSubstitutes: [
+          { name: "Itraconazole (Generic)", price: 45, manufacturer: "Jan Aushadhi" },
+          { name: "Itaspor 100", price: 110, manufacturer: "Intas" }
+        ],
+        lifestyleTips: ["Keep skin dry", "Wear cotton clothes", "Avoid public pools"]
+      },
+      {
+        brandName: "Gentalene Plus Cream",
+        genericName: "Gentamicin + Beclomethasone + Clotrimazole",
+        prescribedDose: "Apply twice daily (morning & night)",
+        treatsCondition: "Mixed skin infection / inflammation",
+        sideEffects: ["Skin thinning", "Redness", "Burning sensation"],
+        category: "Topical Antibiotic/Steroid/Antifungal",
+        ayurvedaAlternatives: [{
+          name: "Gandhak Rasayan", hindiName: "गंधक रसायन", form: "Powder/Tablet",
+          treats: "Chronic skin conditions, itching", howToTake: "500mg with honey or warm water",
+          activeCompounds: "Purified Sulphur", effectiveness: 91,
+          safetyNote: "Highly effective for skin 'pitta'. Consult for dosage."
+        }],
+        genericSubstitutes: [
+          { name: "Betamethasone + Gentamicin (Generic)", price: 18, manufacturer: "Cipla Generic" }
+        ],
+        lifestyleTips: ["Avoid spicy food", "Use mild soap", "Don't scratch the area"]
+      }
+    ],
+    generalAdvice: "Ensure complete antifungal course even if symptoms disappear. Maintain strict personal hygiene. Avoid sugar-heavy diet during infection.",
+  }),
 };
