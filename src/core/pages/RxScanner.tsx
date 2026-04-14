@@ -116,89 +116,60 @@ export default function RxScanner() {
   }, []);
 
   const runClientSideScan = async (imgBase64: string, mType: string): Promise<RxResult> => {
-    // Priority: User Provided Key > Hardcoded Fallback
-    const injectedKey = "";
-    const cleanKey = (apiKey || injectedKey || localStorage.getItem("gemini_api_key") || "").trim();
+    const cleanKey = (apiKey || localStorage.getItem("gemini_api_key") || "").trim();
     
-    if (cleanKey && !localStorage.getItem("gemini_api_key")) {
-      localStorage.setItem("gemini_api_key", cleanKey);
-    }
-
     if (!cleanKey) {
       throw new Error("Gemini API Key is missing. Please add it in settings.");
     }
 
-    // ─── Phase 0: Pre-Processing (2026 Standards) ───
-    console.log("🛠️ Pre-processing image for Gemini 3...");
+    console.log("🛠️ Preparing clinical SDK pipeline...");
     const optimizedBase64 = await resizeImage(imgBase64);
 
-    const models = [
-      "gemini-2.0-flash",
-      "gemini-1.5-flash",
-      "gemini-1.5-pro"
-    ];
-
-    for (const modelId of models) {
-      let retryCount = 0;
-      const maxRetries = 1;
-
-      while (retryCount <= maxRetries) {
+    try {
+      const { GoogleGenerativeAI } = await import("@google/generative-ai");
+      const genAI = new GoogleGenerativeAI(cleanKey);
+      
+      const models = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"];
+      
+      for (const modelId of models) {
         try {
+          console.log(`📡 MedBridge SDK: Engaging ${modelId}...`);
           setCurrentModel(modelId);
-          console.log(`📡 MedBridge AI: Engaging ${modelId} (Attempt ${retryCount + 1})...`);
-          
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${cleanKey}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{
-                parts: [
-                  { 
-                    text: "You are a professional clinical pharmacist. Read this medical prescription and extract: 1. Patient Name 2. Medicines (Brand Name, Generic Name, Dosage). Provide the answer in a STRICT JSON format: { \"patientName\": \"...\", \"medicines\": [{ \"brandName\": \"...\", \"genericName\": \"...\", \"prescribedDose\": \"...\", \"ayurvedaAlternatives\": [] }] }" 
-                  },
-                  { 
-                    inlineData: { 
-                      mimeType: "image/jpeg", 
-                      data: optimizedBase64.startsWith("data:") ? optimizedBase64.split(",")[1] : optimizedBase64 
-                    } 
-                  }
-                ]
-              }],
-              generationConfig: { temperature: 0.1 }
-            })
-          });
+          const model = genAI.getGenerativeModel({ model: modelId });
 
-          if (res.ok) {
-            const data = await res.json();
-            const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (raw) {
-              const start = raw.indexOf('{');
-              const end = raw.lastIndexOf('}');
-              console.log(`✅ Gemini Success (${modelId})!`);
-              return { ...JSON.parse(raw.substring(start, end + 1)), source: `Gemini 3 Vision` };
+          const prompt = "You are a professional clinical pharmacist. Read this medical prescription and extract: 1. Patient Name 2. Medicines (Brand Name, Generic Name, Dosage). Provide the answer in a STRICT JSON format: { \"patientName\": \"...\", \"medicines\": [{ \"brandName\": \"...\", \"genericName\": \"...\", \"prescribedDose\": \"...\", \"ayurvedaAlternatives\": [] }] }";
+          
+          const result = await model.generateContent([
+            { text: prompt },
+            { 
+              inlineData: { 
+                data: optimizedBase64.includes(",") ? optimizedBase64.split(",")[1] : optimizedBase64, 
+                mimeType: mType || "image/jpeg"
+              } 
             }
-          }
-          
-          if (res.status === 400 || res.status === 404) {
-             console.warn(`⚠️ Model ${modelId} unavailable or data structure rejected. Skipping...`);
-             break;
-          }
+          ]);
 
-          if (res.status === 429) {
-             console.warn(`⚠️ Traffic spike on ${modelId}. Re-aligning connection...`);
-             await new Promise(r => setTimeout(r, 4500)); 
-             retryCount++;
-             continue;
-          }
-          break; 
+          const response = await result.response;
+          const text = response.text();
+          const jsonMatch = text.match(/\{[\s\S]*\}/);
+          if (!jsonMatch) throw new Error("Format error");
+          
+          const validated = JSON.parse(jsonMatch[0]);
+          setResult(validated);
+          toast.success("AI Diagnostic Complete.");
+          return { ...validated, source: `AI Verified (${modelId})` };
         } catch (err: any) {
-          console.warn(`Connection error on ${modelId}.`);
-          break;
+          console.warn(`⚠️ SDK ${modelId} failed:`, err.message);
+          if (err.message?.includes("429")) {
+            toast.error("Quota exhausted for this key. Try another key.");
+            throw err;
+          }
         }
       }
+    } catch (err) {
+      console.error("SDK Error:", err);
     }
 
-    // FINAL FAIL-SAFE: Simulation
     console.warn("🚨 ALL CLOUD MODELS SATURATED. Activating Clinical Simulation...");
     toast.warning("Cloud Saturated. Engaging local clinical simulation.");
     return { ...mockApi.getMockRxResult(), source: "Clinical Simulation" };
@@ -330,7 +301,7 @@ export default function RxScanner() {
           <Logo size="sm" />
           <div className="h-6 w-[1px] bg-white/10 mx-2" />
           <h1 className="font-black text-white text-sm leading-none uppercase tracking-widest flex items-center gap-2">
-            Rx Scanner <span className="text-[10px] opacity-40 font-mono">v2.7</span>
+            Rx Scanner <span className="text-[10px] opacity-40 font-mono">v2.8</span>
           </h1>
           <div className="ml-auto flex items-center gap-3">
             <button onClick={() => setShowSettings(true)} className="p-2.5 text-zinc-500 hover:text-white hover:bg-white/5 rounded-xl transition-all"><Settings size={20} /></button>
