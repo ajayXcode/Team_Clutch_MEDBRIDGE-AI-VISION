@@ -1,8 +1,9 @@
 <div align="center">
   <img src="https://images.unsplash.com/photo-1576091160550-217359f4ecf8?q=80&w=2070&auto=format&fit=crop" width="100%" style="border-radius: 20px;" />
 
-  # 🏥 MedBridge AI-Vision
-  ### Next-Gen Unified Medical Intelligence & Diagnostics Platform
+# 🏥 MedBridge AI-Vision
+
+### Next-Gen Unified Medical Intelligence & Diagnostics Platform
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://reactjs.org/)
@@ -15,6 +16,7 @@
 ---
 
 ## 🔗 Quick Access
+
 | Resource | Link |
 | :--- | :--- |
 | 🌐 **Live Production Link** | [https://medbridge-ai-vision.vercel.app/](https://medbridge-ai-vision.vercel.app/) |
@@ -23,11 +25,13 @@
 ---
 
 ## 📖 Overview
+
 **MedBridge AI-Vision** is a production-grade medical diagnostic ecosystem built for high-stakes clinical environments. By combining **Gemini 2.0/1.5 Flash Vision** with a resilient local-first architecture, we provide instant, offline-capable analysis of radiology scans, lab reports, and handwritten prescriptions.
 
 ---
 
 ## 👥 Meet the Architects (TEAM CLUTCH)
+
 <div align="center">
   <table>
     <tr>
@@ -44,27 +48,31 @@
 ## 🚀 Visionary Features
 
 ### 👨‍⚕️ The Clinical Command Center
-*   **Deep Scan Radiology**: Neural analysis of X-Rays, MRIs, and CT scans with urgency flagging.
-*   **Global Lab Core**: Automated reference range comparison for blood and pathology reports.
-*   **AI Consultation Copilot**: Real-time diagnostic assistance powered by specialized clinical prompts.
+
+* **Deep Scan Radiology**: Neural analysis of X-Rays, MRIs, and CT scans with urgency flagging.
+* **Global Lab Core**: Automated reference range comparison for blood and pathology reports.
+* **AI Consultation Copilot**: Real-time diagnostic assistance powered by specialized clinical prompts.
 
 ### 🧪 The Patient Health Hub
-*   **Precision Rx Scanner**: Handwriting-to-Digital extraction with 99.2% clinical confidence.
-*   **Integrative Ayurveda**: Discover safer, ancient alternatives for Pharameceutical meds.
-*   **ABHA Locker Sync**: Full ABDM integration for secure health record management.
+
+* **Precision Rx Scanner**: Handwriting-to-Digital extraction with 99.2% clinical confidence.
+* **Integrative Ayurveda**: Discover safer, ancient alternatives for Pharameceutical meds.
+* **ABHA Locker Sync**: Full ABDM integration for secure health record management.
 
 ---
 
 ## 🛠 Engineering Stack
+
 - **AI Core**: Google Gemini 2.0 Flash / 1.5 Flash Vision Models.
-- **Frontend**: React 18 / Vite / TypeScript (Type-safe infrastructure).
-- **Styling**: Glassmorphism Architecture / Tailwind CSS / Framer Motion.
-- **Database**: Supabase Real-time PostgreSQL & Auth.
-- **Resilience**: Exponential Backoff Retry Pipelines & Specialized OCR Pre-processing.
+* **Frontend**: React 18 / Vite / TypeScript (Type-safe infrastructure).
+* **Styling**: Glassmorphism Architecture / Tailwind CSS / Framer Motion.
+* **Database**: Supabase Real-time PostgreSQL & Auth.
+* **Resilience**: Exponential Backoff Retry Pipelines & Specialized OCR Pre-processing.
 
 ---
 
 ## 🧬 Diagnostic Architecture
+
 ```mermaid
 graph LR
     User[Patient/Doctor] -- Upload --> OCR[Specialized OCR Engine]
@@ -78,9 +86,10 @@ graph LR
 ---
 
 ## 🏁 Future Roadmap
+
 - [ ] **Bilingual Voice Triage**: Text-to-speech support for 12+ Indian regional languages.
-- [ ] **Offline Edge AI**: Transitioning core vision models to run on Google Pixel/ASUS Edge devices.
-- [ ] **Blockchain Health Ledger**: Decentralized transparency for PHR records.
+* [ ] **Offline Edge AI**: Transitioning core vision models to run on Google Pixel/ASUS Edge devices.
+* [ ] **Blockchain Health Ledger**: Decentralized transparency for PHR records.
 
 ---
 
