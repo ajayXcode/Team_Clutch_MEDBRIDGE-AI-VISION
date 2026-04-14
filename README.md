@@ -6,8 +6,8 @@
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://reactjs.org/)
-  [![Gemini AI](https://img.shields.io/badge/AI-Gemini%203.0-orange?style=flat&logo=google-ai)](https://ai.google.dev/)
-  [![Hackathon](https://img.shields.io/badge/Hackathon-Ready-green?style=for-the-badge)](https://github.com/ajayXcode/Team_Clutch_MEDBRIDGE-AI-VISION)
+  [![Gemini AI](https://img.shields.io/badge/AI-Gemini%201.5%20%2F%202.0-blue?style=flat&logo=google-ai)](https://ai.google.dev/)
+  [![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge)](https://github.com/ajayXcode/Team_Clutch_MEDBRIDGE-AI-VISION)
 
   **Empowering Healthcare with Clinical-Grade AI Triage & Vision Diagnostics.**
 </div>
@@ -15,7 +15,7 @@
 ---
 
 ## 📖 Overview
-**MedBridge AI-Vision** is a production-grade medical diagnostic ecosystem built for high-stakes clinical environments. By combining **Gemini 2.0/3.0 Multi-modal Vision** with a resilient local-first architecture, we provide instant, offline-capable analysis of radiology scans, lab reports, and handwritten prescriptions.
+**MedBridge AI-Vision** is a production-grade medical diagnostic ecosystem built for high-stakes clinical environments. By combining **Gemini 2.0/1.5 Flash Vision** with a resilient local-first architecture, we provide instant, offline-capable analysis of radiology scans, lab reports, and handwritten prescriptions.
 
 ---
 
@@ -48,7 +48,7 @@
 ---
 
 ## 🛠 Engineering Stack
-- **AI Core**: Google Gemini 2.0 Flash / 3.0 Experimental Vision Models.
+- **AI Core**: Google Gemini 2.0 Flash / 1.5 Flash Vision Models.
 - **Frontend**: React 18 / Vite / TypeScript (Type-safe infrastructure).
 - **Styling**: Glassmorphism Architecture / Tailwind CSS / Framer Motion.
 - **Database**: Supabase Real-time PostgreSQL & Auth.
