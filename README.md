@@ -118,11 +118,4 @@ sequenceDiagram
 
 ---
 
-## 🏆 Hackathon Highlights
-
-- **100% Offline Capability**: Local-first data architectural patterns.
-* **Clinical Grade UX**: Dark-mode primary interface designed for high-focus medical environments.
-* **PWA Optimized**: Zero-install experience with mobile-first responsiveness.
-
----
 **TEAM CLUTCH | Empowering Global Health with Intelligence.**
