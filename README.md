@@ -5,6 +5,7 @@
   ### Next-Gen Unified Medical Intelligence & Diagnostics Platform
   
   [![Live Demo](https://img.shields.io/badge/Live-Demo-red?style=for-the-badge&logo=vercel)](https://medbridge-ai-vision.vercel.app/)
+  [![Demo Video](https://img.shields.io/badge/Demo-Video-blue?style=for-the-badge&logo=google-drive)](https://drive.google.com/file/d/1k5YeonXIq3dwtq57hZo6vRmQybh0rDu7/view?usp=sharing)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react)](https://reactjs.org/)
   [![Gemini AI](https://img.shields.io/badge/AI-Gemini%201.5%20%2F%202.0-blue?style=flat&logo=google-ai)](https://ai.google.dev/)
